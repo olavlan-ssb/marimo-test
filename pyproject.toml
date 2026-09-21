@@ -1,0 +1,19 @@
+[project]
+name = "marimo-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Olav Landsverk", email = "ovk@ssb.no" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "marimo>=0.24.2",
+]
+
+[project.scripts]
+marimo-test = "marimo_test:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
