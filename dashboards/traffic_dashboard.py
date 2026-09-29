@@ -77,31 +77,35 @@ def _(mo, visible_traffic):
 
 @app.cell
 def _(plt, rolling_window, visible_traffic):
-    figure, axis = plt.subplots(figsize=(8, 4))
-    axis.plot(visible_traffic["date"], visible_traffic["visits"], alpha=0.35, label="Daily")
-    axis.plot(
+    traffic_figure, traffic_axis = plt.subplots(figsize=(8, 4))
+    traffic_axis.plot(
+        visible_traffic["date"], visible_traffic["visits"], alpha=0.35, label="Daily"
+    )
+    traffic_axis.plot(
         visible_traffic["date"],
         visible_traffic["rolling_visits"],
         linewidth=2,
         label=f"{rolling_window.value}-day average",
     )
-    axis.set(title="Website visits", xlabel="Date", ylabel="Visits")
-    axis.legend()
-    axis.grid(alpha=0.25)
-    figure.autofmt_xdate()
-    figure.tight_layout()
-    figure
+    traffic_axis.set(title="Website visits", xlabel="Date", ylabel="Visits")
+    traffic_axis.legend()
+    traffic_axis.grid(alpha=0.25)
+    traffic_figure.autofmt_xdate()
+    traffic_figure.tight_layout()
+    traffic_figure
     return
 
 
 @app.cell
 def _(pl, plt, traffic):
     device_totals = traffic.group_by("device").agg(pl.col("visits").sum().alias("visits"))
-    figure, axis = plt.subplots(figsize=(6, 4))
-    axis.pie(device_totals["visits"], labels=device_totals["device"], autopct="%1.0f%%")
-    axis.set_title("Visits by device")
-    figure.tight_layout()
-    figure
+    device_figure, device_axis = plt.subplots(figsize=(6, 4))
+    device_axis.pie(
+        device_totals["visits"], labels=device_totals["device"], autopct="%1.0f%%"
+    )
+    device_axis.set_title("Visits by device")
+    device_figure.tight_layout()
+    device_figure
     return
 
 

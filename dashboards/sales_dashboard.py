@@ -77,12 +77,12 @@ def _(filtered_sales, pl, plt):
     monthly = filtered_sales.group_by(pl.col("date").dt.month().alias("month")).agg(
         pl.col("revenue").sum().alias("revenue")
     ).sort("month")
-    figure, axis = plt.subplots(figsize=(8, 4))
-    axis.plot(monthly["month"], monthly["revenue"], marker="o")
-    axis.set(title="Monthly revenue", xlabel="Month", ylabel="Revenue")
-    axis.grid(alpha=0.25)
-    figure.tight_layout()
-    figure
+    monthly_figure, monthly_axis = plt.subplots(figsize=(8, 4))
+    monthly_axis.plot(monthly["month"], monthly["revenue"], marker="o")
+    monthly_axis.set(title="Monthly revenue", xlabel="Month", ylabel="Revenue")
+    monthly_axis.grid(alpha=0.25)
+    monthly_figure.tight_layout()
+    monthly_figure
     return
 
 
@@ -94,11 +94,11 @@ def _(pl, plt, sales, year):
         .agg(pl.col("revenue").sum().alias("revenue"))
         .sort("revenue", descending=True)
     )
-    figure, axis = plt.subplots(figsize=(8, 4))
-    axis.bar(category_totals["category"], category_totals["revenue"])
-    axis.set(title=f"Revenue by category in {year.value}", ylabel="Revenue")
-    figure.tight_layout()
-    figure
+    category_figure, category_axis = plt.subplots(figsize=(8, 4))
+    category_axis.bar(category_totals["category"], category_totals["revenue"])
+    category_axis.set(title=f"Revenue by category in {year.value}", ylabel="Revenue")
+    category_figure.tight_layout()
+    category_figure
     return
 
 
